@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>공지사항</title>
+
+    <script th:inline="javascript">
+        let noticeList = [[${noticeList}]]
+    </script>
+</head>
+<body>
+
+<h1>공지사항</h1>
+
+<div id="noticeList">
+    <!-- 여기에 결과가 표시될 부분 -->
+</div>
+
+<div id="addNotice">
+    <button onclick="goToAddNotice()">공지사항 추가</button>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', getNoticeList);
+
+    function getNoticeList() {
+
+
+        const noticeListContainer = document.getElementById('<div id="noticeList">\n');
+
+        if (noticeList.length === 0) {
+            noticeListContainer.innerHTML = '<p>등록된 공지사항이 없습니다.</p>';
+        } else {
+            noticeList.forEach(notice => {
+                // 새로운 div 생성
+                const noticeDiv = document.createElement('div');
+                noticeDiv.textContent = `${notice.noticeNo} - ${notice.noticeName} - ${notice.userName} - ${notice.createdTime}`;
+                // 클래스 추가
+                noticeDiv.classList.add('notice-item');
+                // 데이터 속성 추가
+                noticeDiv.dataset.noticeNo = notice.noticeNo;
+                noticeListContainer.appendChild(noticeDiv);
+
+                // 클릭 이벤트를 새로운 div에 추가
+                noticeDiv.addEventListener('click', function () {
+                    goToNoticePage(notice.noticeNo);
+                });
+                noticeListContainer.appendChild(noticeDiv);
+            });
+        }
+    }
+
+    function goToNoticePage(noticeNo) {
+        window.location.href = `/notice/detailNotice//${noticeNo}`;
+    }
+
+    function goToAddNotice() {
+        // 추가 버튼 클릭 시, 방 등록 화면으로 이동
+        window.location.href = "/notice/newNotice"; // 이동할 주소로 변경해주세요
+    }
+</script>
+
+</body>
+</html>

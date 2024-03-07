@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>공지사항 조회</title>
+
+    <script th:inline="javascript">
+        let notice = [[${notice}]]
+    </script>
+</head>
+<body>
+
+<h1>공지사항 조회</h1>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>업체 번호</th>
+        <th>카테고리 분류</th>
+        <th>업체명</th>
+        <th>업체 등록일</th>
+        <th>업체 정보 수정일</th>
+        <th>업체 삭제 사유</th>
+        <th>기능</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${notice}">
+        <td th:text="${item.noticeNo}"></td>
+        <td th:text="${item.noticeName}"></td>
+        <td th:text="${item.userName}"></td>
+        <td th:text="${#calendars.format(item.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+    </tr>
+
+    </tbody>
+</table>
+<p>${notice.noticeContent}</p>
+
+
+<div id="addNotice">
+    <button onclick="goToAddNotice()">공지사항 추가</button>
+</div>
+
+<div id="updateNotice">
+    <button onclick="goToUpdateNotice()">공지사항 수정</button>
+</div>
+
+<script>
+    function goToAddNotice() {
+        // 추가 버튼 클릭 시, 방 등록 화면으로 이동
+        window.location.href = "/notice/newNotice"; // 이동할 주소로 변경해주세요
+    }
+
+    function goToUpdateNotice() {
+        // 추가 버튼 클릭 시, 방 등록 화면으로 이동
+        window.location.href = "/notice/updateNotice"; // 이동할 주소로 변경해주세요
+    }
+</script>
+
+
+
+</body>
+</html>
